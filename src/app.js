@@ -1,17 +1,24 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
+import Counter from './components/counter';
+
 class App extends Component {
+  state = {
+    loading: true,
+  };
+
   componentDidMount() {
-    this.props.getAsyncValue();
+    setTimeout(() => {
+      this.props.getInitialState();
+      return this.setState({ loading: false });
+    }, 5000);
   }
 
   render() {
     return (
       <div className="App">
-        <h1>{this.props.store}</h1>
-        <button onClick={this.props.inc}>Прибавить 1</button>
-        <button onClick={this.props.getAsyncValue}>Прибавить 100 (асинхронно)</button>
+        <Counter loading={this.state.loading} />
       </div>
     );
   };
@@ -25,12 +32,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    inc: () => dispatch({ type: 'INC' }),
-    getAsyncValue: () => {
-      setTimeout(() => {
-        dispatch({ type: 'INC' });
-      }, 3000);
-    },
+    getInitialState: () => dispatch({ type: 'GET_INITIAL_STATE' }),
   }
 };
 

@@ -1,10 +1,11 @@
-import { createStore, applyMiddleware } from 'redux';
-import thunk from 'redux-thunk';
+import { createStore } from 'redux';
 
 const initialState = 0;
 
 const reducer = (store = initialState, action) => {
   switch(action.type) {
+    case 'GET_INITIAL_STATE':
+      return store += 100;
     case 'INC':
       return store += 1;
     default:
@@ -12,6 +13,6 @@ const reducer = (store = initialState, action) => {
   }
 };
 
-const store = createStore(reducer, applyMiddleware(thunk));
+const store = createStore(reducer);
 
 export default store;
