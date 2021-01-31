@@ -1,14 +1,20 @@
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-function App({ store, inc, getAsyncValue }) {
-  return (
-    <div className="App">
-      {console.log('Step 1')}
-      <h1>{store}</h1>
-      <button onClick={inc}>Прибавить 1</button>
-      <button onClick={getAsyncValue}>Прибавить 100 (асинхронно)</button>
-    </div>
-  );
+class App extends Component {
+  componentDidMount() {
+    this.props.getAsyncValue();
+  }
+
+  render() {
+    return (
+      <div className="App">
+        <h1>{this.props.store}</h1>
+        <button onClick={this.props.inc}>Прибавить 1</button>
+        <button onClick={this.props.getAsyncValue}>Прибавить 100 (асинхронно)</button>
+      </div>
+    );
+  };
 }
 
 const mapStateToProps = (state) => {
@@ -24,7 +30,7 @@ const mapDispatchToProps = (dispatch) => {
       setTimeout(() => {
         dispatch({ type: 'INC' });
       }, 3000);
-    }
+    },
   }
 };
 
