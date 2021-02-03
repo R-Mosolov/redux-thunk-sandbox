@@ -1,25 +1,18 @@
 import { createStore, applyMiddleware } from 'redux';
 import { createLogger } from 'redux-logger';
 import thunk from 'redux-thunk';
+import { fromJS, List } from 'immutable';
 
-const initialState = [2, 1, 3];
+const initialState = List([4, 2, 1, 3]);
 
 const reducer = (store = initialState, action) => {
   switch(action.type) {
     case 'GET_INITIAL_STATE':
       return store;
     case 'SET_STATE':
-      return store = action.payload;
+      return fromJS(action.payload);
     case 'FILTER_STATE':
-      return store.filter((item) => item !== 2);
-    case 'GET_ASYNC_VALUE':
-      fetch('https://pokeapi.co/api/v2/pokemon/ditto')
-        .then((res) => res.json())
-        .then((res) => {
-          console.log(res.id.toString().split(''));
-          store = res.id.toString().split('');
-          return store;
-        });
+      return store.filter((item) => item !== 2 && item !== '2');
     default:
       return initialState;
   }
