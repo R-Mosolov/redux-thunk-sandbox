@@ -12,7 +12,7 @@ class App extends Component {
     setTimeout(() => {
       this.props.getInitialState();
       return this.setState({ loading: false });
-    }, 5000);
+    }, 3000);
   }
 
   render() {

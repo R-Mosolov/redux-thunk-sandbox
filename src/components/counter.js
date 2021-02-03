@@ -1,10 +1,13 @@
+import React from 'react';
 import { connect } from 'react-redux';
 
-function Counter({ store, inc, loading }) {
+function Counter({ store, filterState, getAsyncValue }) {
   return (
     <div className="App">
-      <h1>{(loading) ? 'Пожалуйста, подождите...' : store}</h1>
-      <button onClick={inc}>Прибавить 1</button>
+      {store}
+      <br/>
+      <button onClick={filterState}>Отфильтровать</button>
+      <button onClick={getAsyncValue}>Получить значение (асинхронно)</button>
     </div>
   );
 };
@@ -17,7 +20,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    inc: () => dispatch({ type: 'INC' }),
+    filterState: () => dispatch({ type: 'FILTER_STATE' }),
+    getAsyncValue: () => dispatch({ type: 'GET_ASYNC_VALUE' }),
   }
 };
 
