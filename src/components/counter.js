@@ -11,8 +11,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    filterState: () => dispatch({ type: 'FILTER_STATE' }),
     actions: bindActionCreators({ getAsyncValue }, dispatch),
+    filterState: () => dispatch({ type: 'FILTER_STATE' }),
+    getInitialState: () => dispatch({ type: 'GET_INITIAL_STATE' }),
   }
 };
 
@@ -23,15 +24,20 @@ class Counter extends Component {
     }
   };
 
+  componentDidMount() {
+    this.props.actions.getAsyncValue();
+  }
+
   render() {
-    const { store, filterState } = this.props;
+    const { store, filterState, getInitialState } = this.props;
 
     return (
       <div className="App">
-        {store}
+        {(store.isFiltered) ? store.filtered : store.original}
         <br/>
-        <button onClick={filterState}>Отфильтровать</button>
         <button onClick={() => this.props.actions.getAsyncValue()}>Получить значение (асинхронно)</button>
+        <button onClick={filterState}>Отфильтровать</button>
+        <button onClick={getInitialState}>Получить начальный state</button>
       </div>
     );
   };

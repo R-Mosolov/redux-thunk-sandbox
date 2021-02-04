@@ -1,18 +1,32 @@
 import { createStore, applyMiddleware } from 'redux';
 import { createLogger } from 'redux-logger';
 import thunk from 'redux-thunk';
-import { fromJS, List } from 'immutable';
 
-const initialState = List([4, 2, 1, 3]);
+const initialState = {
+  original: ['L', 'o', 'a', 'd', 'i', 'n', 'g', '.', '.', '.'],
+  filtered: [],
+  isFiltered: false,
+};
 
 const reducer = (store = initialState, action) => {
   switch(action.type) {
     case 'GET_INITIAL_STATE':
-      return store;
+      return {
+        ...store,
+        original: store.original,
+        isFiltered: false,
+      };
     case 'SET_STATE':
-      return fromJS(action.payload);
+      return {
+        ...store,
+        original: action.payload,
+      };
     case 'FILTER_STATE':
-      return store.filter((item) => item !== 2 && item !== '2');
+      return {
+        ...store,
+        filtered: store.original.filter((item) => item !== 2 && item !== '2'),
+        isFiltered: true,
+      };
     default:
       return initialState;
   }

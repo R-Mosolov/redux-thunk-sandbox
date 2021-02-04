@@ -5,7 +5,6 @@ export const getAsyncValue = () => async (dispatch) => {
     .then((res) => res.json())
     .then((res) => {
       const newStore = res.id.toString().split('');
-      console.log(newStore);
       dispatch({ type: 'SET_STATE', payload: newStore });
     });
 };
